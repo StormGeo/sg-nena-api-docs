@@ -3,7 +3,16 @@
 # Documentation and tutorials for the StormGeo Nena API.
 
 Here you will find an interactive python notebook tutorial that will teach you how to use the
-Nena API with Python and JupyterLab.
+Nena API with Python and JupyterLab. The repo has the following tutorials:
+
+* **NenaAPI-Tutorial.ipynb** - An interactive tutorial on how to use the Nena API
+* **dk_wind_power.ipynb** - Tutorial on how to plot danish wind power with data from the Nena API
+* **no_hydro_filling.ipynb** - TUtorial on how to plot norwegian reservoir filling with data from the Nena API
+
+In addition this repo has the python module:
+* **nena_api.py** <br>
+
+with pre-implemented python functions for requesting data from the Nena API
 
 ## Getting started
 
