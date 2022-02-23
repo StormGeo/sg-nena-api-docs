@@ -31,6 +31,7 @@ You will need:
 - JupyterLab
 - Python3
 - Pandas
+- Bokeh
 - Matplotlib
 
 The easiest way to get these is by using a default installation of [Anaconda](https://www.anaconda.com/).
