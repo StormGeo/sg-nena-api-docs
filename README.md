@@ -38,7 +38,7 @@ The easiest way to get these is by using a default installation of [Anaconda](ht
 
 ## API Limitations
 
-Here are listed a few important limitations in the API that any user should be aware of.
+Here is listed a few important limitations in the API that any user should be aware of.
 
 * Due to limitations in the API, there are 24 hour values in both DST clock change days, with the missing hour being averaged into 02:00 for autumn, and an interpolated extra hour on the spring clock change
 
