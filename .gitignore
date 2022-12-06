@@ -2,3 +2,5 @@
 .virtual_documents
 __pycache__
 .vscode
+test
+config.py
