@@ -7,7 +7,7 @@ Nena API with Python and JupyterLab. You will also find Power Query scripts to c
 
 To get the files in this repository:
 
-1. Clone the repository or download it as a zip file.
+1. Clone the repository or download it as a zip file. (Click on "Code" and "Download Zip")
 
 ## Power Query
 
