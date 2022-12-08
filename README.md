@@ -7,11 +7,11 @@ Nena API with Python and JupyterLab. You will also find Power Query scripts to c
 
 To get the files in this repository:
 
-1. Clone the repository or download it as a zip file.
+1. Clone the repository or download it as a zip file. (Click on "Code" and "Download Zip")
 
 ## Power Query
 
-In the Power Query folder, you will find the three Power Query functions to import into Excel. Please see the [API documentation](https://docs.nena.no/api/) on how to setup [Power Query](https://learn.microsoft.com/en-us/power-query/power-query-what-is-power-query).
+In the Nena Power Query folder, you will find the three Power Query functions to import into Excel. Please see the [API documentation](https://docs.nena.no/api/) on how to setup [Power Query](https://learn.microsoft.com/en-us/power-query/power-query-what-is-power-query).
 
 ## Jupyter Notebook tutorial and python module.
 
