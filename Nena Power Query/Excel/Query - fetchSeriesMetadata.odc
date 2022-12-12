@@ -1,0 +1,105 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/x-ms-odc; charset=utf-8">
+<meta name=ProgId content=ODC.Database>
+<meta name=SourceType content=OLEDB>
+<title>Query - fetchSeriesMetadata</title>
+<xml id=docprops><o:DocumentProperties
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns="http://www.w3.org/TR/REC-html40">
+  <o:Description>Connection to the 'fetchSeriesMetadata' query in the workbook.</o:Description>
+  <o:Name>Query - fetchSeriesMetadata</o:Name>
+ </o:DocumentProperties>
+</xml><xml id=msodc><odc:OfficeDataConnection
+  xmlns:odc="urn:schemas-microsoft-com:office:odc"
+  xmlns="http://www.w3.org/TR/REC-html40">
+  <odc:PowerQueryConnection odc:Type="OLEDB">
+   <odc:ConnectionString>Provider=Microsoft.Mashup.OleDb.1;Data Source=$Workbook$;Location=fetchSeriesMetadata;Extended Properties=&quot;&quot;</odc:ConnectionString>
+   <odc:CommandType>SQL</odc:CommandType>
+   <odc:CommandText>SELECT * FROM [fetchSeriesMetadata]</odc:CommandText>
+  </odc:PowerQueryConnection>
+  <odc:PowerQueryMashupData>&lt;Mashup xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://schemas.microsoft.com/DataMashup&quot;&gt;&lt;Client&gt;EXCEL&lt;/Client&gt;&lt;Version&gt;2.110.222.0&lt;/Version&gt;&lt;MinVersion&gt;2.21.0.0&lt;/MinVersion&gt;&lt;Culture&gt;nb-NO&lt;/Culture&gt;&lt;SafeCombine&gt;false&lt;/SafeCombine&gt;&lt;Items&gt;&lt;Query Name=&quot;fetchSeriesMetadata&quot;&gt;&lt;Formula&gt;&lt;![CDATA[/*&#13;&#10;This M function fetches meta data on a time series from StormGeo's Nena API. You can use the metadata&#13;&#10;to see:&#13;&#10;&#13;&#10;1) When a time series was last updated.&#13;&#10;2) The unit of the value column.&#13;&#10;3) The time range for which data exists for the time series.&#13;&#10;&#13;&#10;Written on: 01.12.2022&#13;&#10;By: StormGeo Nena Analysis&#13;&#10;&#13;&#10;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-&#13;&#10;MIT License&#13;&#10;&#13;&#10;Copyright (c) 2022 StormGeo AS&#13;&#10;&#13;&#10;Permission is hereby granted, free of charge, to any person obtaining a copy&#13;&#10;of this software and associated documentation files (the &quot;Software&quot;), to deal&#13;&#10;in the Software without restriction, including without limitation the rights&#13;&#10;to use, copy, modify, merge, publish, distribute, sublicense, and/or sell&#13;&#10;copies of the Software, and to permit persons to whom the Software is&#13;&#10;furnished to do so, subject to the following conditions:&#13;&#10;&#13;&#10;The above copyright notice and this permission notice shall be included in all&#13;&#10;copies or substantial portions of the Software.&#13;&#10;&#13;&#10;THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR&#13;&#10;IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,&#13;&#10;FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE&#13;&#10;AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER&#13;&#10;LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,&#13;&#10;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE&#13;&#10;SOFTWARE.&#13;&#10;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-&#13;&#10;*/&#13;&#10;let&#13;&#10;    Source = let&#13;&#10;    Source = (series_id as text, optional nena_username as text, optional nena_password as text) =&gt;&#13;&#10;        let&#13;&#10;            // Checking that a username and password has been provided&#13;&#10;            username =&#13;&#10;                if nena_username is null then&#13;&#10;                    try&#13;&#10;                        Excel.CurrentWorkbook(){[Name = &quot;NENA_USERNAME&quot;]}[Content]{0}[Column1]&#13;&#10;                    otherwise&#13;&#10;                        error&#13;&#10;                            [&#13;&#10;                                Message.Format = &quot;No username found. You must provide a valid username as a function parameter or define a named range in the Excel&#13;&#10;                        workbook. The named range must be named exactly: NENA_USERNAME&quot;&#13;&#10;                            ]&#13;&#10;                else&#13;&#10;                    nena_username,&#13;&#10;            password =&#13;&#10;                if nena_password is null then&#13;&#10;                    try&#13;&#10;                        Excel.CurrentWorkbook(){[Name = &quot;NENA_PASSWORD&quot;]}[Content]{0}[Column1]&#13;&#10;                    otherwise&#13;&#10;                        error&#13;&#10;                            [&#13;&#10;                                Message.Format = &quot;No password found. You must provide a valid password as a function parameter or define a named range in the Excel&#13;&#10;                        workbook. The named range must be named exactly: NENA_PASSWORD&quot;&#13;&#10;                            ]&#13;&#10;                else&#13;&#10;                    nena_password,&#13;&#10;            checkForNullResponse = (resp) =&gt;&#13;&#10;                // Cathcing the octet-stream error.&#13;&#10;                let&#13;&#10;                    metadata = Value.Metadata(resp), #&quot;Status&quot; = if metadata[Response.Status] &lt;&gt; 200 then false else true&#13;&#10;                in&#13;&#10;                    #&quot;Status&quot;,&#13;&#10;            // FETCHING TOKEN&#13;&#10;            token_url = &quot;https://api.nena.no/api/user/login&quot;,&#13;&#10;            headers_token = [#&quot;Content-Type&quot; = &quot;application/json&quot;],&#13;&#10;            postToken = Json.FromValue([UserName = username, Password = password]),&#13;&#10;            token_response = Web.Contents(token_url, [&#13;&#10;                Headers = headers_token,&#13;&#10;                Content = postToken&#13;&#10;            ]),&#13;&#10;            token =&#13;&#10;                if checkForNullResponse(token_response) then&#13;&#10;                    Json.Document(token_response)[Token]&#13;&#10;                else&#13;&#10;                    error Error.Record(&quot;Authentication Error&quot;, &quot;Your username or password is incorrect.&quot;),&#13;&#10;            // Return a token, otherwise raise error.&#13;&#10;            // FETCHING SERIES&#13;&#10;            postData = Json.FromValue(&#13;&#10;                [&#13;&#10;                    FromDateTime = &quot;today&quot;,&#13;&#10;                    ToDateTime = &quot;today&quot;,&#13;&#10;                    Resolution = &quot;native&quot;,&#13;&#10;                    SeriesId = series_id,&#13;&#10;                    UserInfo = [&#13;&#10;                        UserName = username,&#13;&#10;                        Token = token&#13;&#10;                    ]&#13;&#10;                ]&#13;&#10;            ),&#13;&#10;            ConvertResponse = (res) =&gt;&#13;&#10;                let&#13;&#10;                    // Transforming table&#13;&#10;                    jsonResponse = Json.Document(res),&#13;&#10;                    list_data = Record.ToList(jsonResponse),&#13;&#10;                    #&quot;Meta Data&quot; = Record.AddField(list_data{1}, &quot;last updated&quot;, list_data{0}),&#13;&#10;                    #&quot;Table&quot; = Record.ToTable(#&quot;Meta Data&quot;),&#13;&#10;                    #&quot;Table Pivoted&quot; = Table.Pivot(#&quot;Table&quot;, List.Distinct(#&quot;Table&quot;[Name]), &quot;Name&quot;, &quot;Value&quot;),&#13;&#10;                    #&quot;Change to Datetime&quot; = Table.TransformColumnTypes(&#13;&#10;                        #&quot;Table Pivoted&quot;, {{&quot;last updated&quot;, type datetime}}&#13;&#10;                    )&#13;&#10;                in&#13;&#10;                    #&quot;Change to Datetime&quot;,&#13;&#10;            SendRequest = (post) =&gt;&#13;&#10;                // Function for submitting post request to Nena API&#13;&#10;                let&#13;&#10;                    url = &quot;https://api.nena.no/api/fundamental/series&quot;,&#13;&#10;                    headers = [#&quot;Content-Type&quot; = &quot;application/json&quot;, #&quot;Accept&quot; = &quot;application/json&quot;],&#13;&#10;                    response = Web.Contents(url, [&#13;&#10;                        Headers = headers,&#13;&#10;                        Content = post&#13;&#10;                    ])&#13;&#10;                in&#13;&#10;                    response,&#13;&#10;            // #&quot;checked response&quot;,&#13;&#10;            #&quot;Fist Request&quot; = SendRequest(postData),&#13;&#10;            dataset =&#13;&#10;                if checkForNullResponse(#&quot;Fist Request&quot;)&#13;&#10;                // Implementing this logic as sometimes the API returnes null despite correct parameters.&#13;&#10;                then&#13;&#10;                    ConvertResponse(#&quot;Fist Request&quot;)&#13;&#10;                else&#13;&#10;                    let&#13;&#10;                        #&quot;Second Request&quot; = SendRequest(postData),&#13;&#10;                        #&quot;Second Response&quot; =&#13;&#10;                            if checkForNullResponse(#&quot;Second Request&quot;) then&#13;&#10;                                ConvertResponse(#&quot;Second Request&quot;)&#13;&#10;                            else&#13;&#10;                                error Error.Record(&quot;Bad request&quot;, &quot;You have provided an invalid parameter.&quot;)&#13;&#10;                    in&#13;&#10;                        #&quot;Second Response&quot;&#13;&#10;        in&#13;&#10;            dataset,&#13;&#10;        // Function type definition&#13;&#10;&#13;&#10;        functionType = type function (&#13;&#10;            series_id as ( type text meta [&#13;&#10;                Documentation.FieldCaption = &quot;Series Id&quot;,&#13;&#10;                Documentation.SampleValues = {&quot;dehrprice&quot;}&#13;&#10;            ]),&#13;&#10;            optional nena_username as ( type text meta [&#13;&#10;                Documentation.FieldCaption = &quot;Nena Username&quot;,&#13;&#10;                Documentation.FieldDescription = &quot;Your StormGeo Nena username (optional if defined as an Excel named range).&quot;&#13;&#10;            ]),&#13;&#10;            optional nena_password as ( type text meta [&#13;&#10;                Documentation.FieldCaption = &quot;Nena Password&quot;&#13;&#10;            ]))&#13;&#10;            as table meta [&#13;&#10;                Documentation.Name = &quot;fetchSeries&quot;,&#13;&#10;                Documentation.LongDescription = Lines.ToText(&#13;&#10;                    {&#13;&#10;                        &quot;Function for fetching metadata for a single time series from the StormGeo Nena API. The data is loaded into Excel as a table object.&quot;,&#13;&#10;                        &quot;For details please see the documentation at https://docs.nena.no/api/&quot;&#13;&#10;                    }),&#13;&#10;                Documentation.Examples = {[&#13;&#10;                    Description = &quot;Returns a table with columns containing metadata.&quot;,&#13;&#10;                    Code = &quot;fetchSeriesMetadata(&quot;&quot;dehrprice&quot;&quot;)&quot;&#13;&#10;                ]}&#13;&#10;            ]&#13;&#10;&#13;&#10;in&#13;&#10;    Value.ReplaceType(&#13;&#10;        Source, functionType&#13;&#10;    )&#13;&#10;in&#13;&#10;    Source]]&gt;&lt;/Formula&gt;&lt;IsParameterQuery xsi:nil=&quot;true&quot; /&gt;&lt;IsDirectQuery xsi:nil=&quot;true&quot; /&gt;&lt;/Query&gt;&lt;/Items&gt;&lt;/Mashup&gt;</odc:PowerQueryMashupData>
+ </odc:OfficeDataConnection>
+</xml>
+<style>
+<!--
+    .ODCDataSource
+    {
+    behavior: url(dataconn.htc);
+    }
+-->
+</style>
+ 
+</head>
+
+<body onload='init()' scroll=no leftmargin=0 topmargin=0 rightmargin=0 style='border: 0px'>
+<table style='border: solid 1px threedface; height: 100%; width: 100%' cellpadding=0 cellspacing=0 width='100%'> 
+  <tr> 
+    <td id=tdName style='font-family:arial; font-size:medium; padding: 3px; background-color: threedface'> 
+      &nbsp; 
+    </td> 
+     <td id=tdTableDropdown style='padding: 3px; background-color: threedface; vertical-align: top; padding-bottom: 3px'>
+
+      &nbsp; 
+    </td> 
+  </tr> 
+  <tr> 
+    <td id=tdDesc colspan='2' style='border-bottom: 1px threedshadow solid; font-family: Arial; font-size: 1pt; padding: 2px; background-color: threedface'>
+
+      &nbsp; 
+    </td> 
+  </tr> 
+  <tr> 
+    <td colspan='2' style='height: 100%; padding-bottom: 4px; border-top: 1px threedhighlight solid;'> 
+      <div id='pt' style='height: 100%' class='ODCDataSource'></div> 
+    </td> 
+  </tr> 
+</table> 
+
+  
+<script language='javascript'> 
+
+function init() { 
+  var sName, sDescription; 
+  var i, j; 
+  
+  try { 
+    sName = unescape(location.href) 
+  
+    i = sName.lastIndexOf(".") 
+    if (i>=0) { sName = sName.substring(1, i); } 
+  
+    i = sName.lastIndexOf("/") 
+    if (i>=0) { sName = sName.substring(i+1, sName.length); } 
+
+    document.title = sName; 
+    document.getElementById("tdName").innerText = sName; 
+
+    sDescription = document.getElementById("docprops").innerHTML; 
+  
+    i = sDescription.indexOf("escription>") 
+    if (i>=0) { j = sDescription.indexOf("escription>", i + 11); } 
+
+    if (i>=0 && j >= 0) { 
+      j = sDescription.lastIndexOf("</", j); 
+
+      if (j>=0) { 
+          sDescription = sDescription.substring(i+11, j); 
+        if (sDescription != "") { 
+            document.getElementById("tdDesc").style.fontSize="x-small"; 
+          document.getElementById("tdDesc").innerHTML = sDescription; 
+          } 
+        } 
+      } 
+    } 
+  catch(e) { 
+
+    } 
+  } 
+</script> 
+
+</body> 
+ 
+</html>
