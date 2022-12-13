@@ -1,9 +1,9 @@
 ![](images/Frame_108.png)
 
-# Tutorials and Power Query scripts for the StormGeo Nena API.
+# Tutorials and Power Query scripts/connector for the StormGeo Nena API.
 
 Here you will find material related to the StormGeo Nena API. This included an interactive python notebook tutorial that will teach you how to use the
-Nena API with Python and JupyterLab. You will also find Power Query scripts to connect the Nena API with Excel.
+Nena API with Python and JupyterLab. You will also find Power Query scripts to connect the Nena API with Excel and the Power BI connector.
 
 To get the files in this repository:
 
@@ -11,7 +11,7 @@ To get the files in this repository:
 
 ## Power Query
 
-In the Nena Power Query folder, you will find the three Power Query functions to import into Excel. Please see the [API documentation](https://docs.nena.no/api/) on how to setup [Power Query](https://learn.microsoft.com/en-us/power-query/power-query-what-is-power-query).
+Please see the [API documentation](https://docs.nena.no/api/) on how to setup [Power Query](https://learn.microsoft.com/en-us/power-query/power-query-what-is-power-query) in Excel and PowerBI.
 
 ## Jupyter Notebook tutorial and python module.
 
